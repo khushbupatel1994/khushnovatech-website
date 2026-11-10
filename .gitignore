@@ -8,4 +8,5 @@ dist
 !.env.example
 !.env.local.example
 *.log
+*.tsbuildinfo
 coverage
