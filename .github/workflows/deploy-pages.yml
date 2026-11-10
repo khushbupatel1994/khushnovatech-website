@@ -1,0 +1,65 @@
+name: Deploy website to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@9.15.4 --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Set Pages URL
+        run: |
+          if [ "$GITHUB_REPOSITORY" = "$GITHUB_REPOSITORY_OWNER/$GITHUB_REPOSITORY_OWNER.github.io" ]; then
+            echo "NEXT_PUBLIC_BASE_PATH=" >> "$GITHUB_ENV"
+            echo "NEXT_PUBLIC_SITE_URL=https://$GITHUB_REPOSITORY_OWNER.github.io" >> "$GITHUB_ENV"
+          else
+            echo "NEXT_PUBLIC_BASE_PATH=/$GITHUB_REPOSITORY_NAME" >> "$GITHUB_ENV"
+            echo "NEXT_PUBLIC_SITE_URL=https://$GITHUB_REPOSITORY_OWNER.github.io/$GITHUB_REPOSITORY_NAME" >> "$GITHUB_ENV"
+          fi
+
+      - name: Build static website
+        env:
+          NEXT_PUBLIC_W3FORMS_ACCESS_KEY: ${{ secrets.NEXT_PUBLIC_W3FORMS_ACCESS_KEY }}
+        run: |
+          pnpm --dir apps/web build
+          touch apps/web/out/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/web/out
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

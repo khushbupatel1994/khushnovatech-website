@@ -1,0 +1,32 @@
+{
+  "name": "khushnovatech-web",
+  "version": "0.1.0",
+  "private": true,
+  "main": "node_modules/next/dist/bin/next",
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "next": "^15.3.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.22.0",
+    "eslint-config-next": "^15.3.0",
+    "typescript": "^5.7.3",
+    "@eslint/eslintrc": "^3.3.1"
+  }
+}
