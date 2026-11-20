@@ -33,8 +33,17 @@ export function ContactForm() {
     }
     const key = process.env.NEXT_PUBLIC_W3FORMS_ACCESS_KEY;
     if (!key || key === "replace_with_your_w3forms_access_key") {
-      setStatus("error");
-      setFeedback("Contact form is not configured yet.");
+      const subject = encodeURIComponent("New KhushNovaTech inquiry");
+      const body = encodeURIComponent([
+        `Name: ${parsed.data.name}`,
+        `Phone: ${parsed.data.phone_number}`,
+        `Email: ${parsed.data.email}`,
+        "",
+        parsed.data.message,
+      ].join("\n"));
+      window.location.href = `mailto:khushbu9834@gmail.com?subject=${subject}&body=${body}`;
+      setStatus("success");
+      setFeedback("Your email app is opening with the message ready to send.");
       return;
     }
     busy.current = true;
@@ -64,6 +73,6 @@ export function ContactForm() {
     }
   }
 
-  return <div className="contact-card"><h2>Tell us about your project</h2><p>Fields marked with * are required. Your message is sent through W3Forms for email delivery.</p><form onSubmit={handleSubmit} aria-busy={status === "loading"}><div className="form-grid"><div className="field"><label htmlFor="name">Full name *</label><input id="name" name="name" autoComplete="name" minLength={2} maxLength={100} required /></div><div className="field"><label htmlFor="phone">Phone number *</label><input id="phone" name="phone_number" type="tel" autoComplete="tel" minLength={7} maxLength={20} required /></div></div><div className="field"><label htmlFor="email">Email address *</label><input id="email" name="email" type="email" autoComplete="email" maxLength={254} required /></div><div className="field"><label htmlFor="message">Message / project details *</label><textarea id="message" name="message" rows={6} minLength={10} maxLength={5000} required /></div><div className="honeypot" aria-hidden="true"><label htmlFor="botcheck">Leave empty</label><input id="botcheck" name="botcheck" tabIndex={-1} autoComplete="off" /></div><button className="submit" type="submit" disabled={status === "loading"}>{status === "loading" ? "Sending…" : "Send message"}</button><p className={`form-status ${status === "error" ? "error" : status === "success" ? "success" : ""}`} role={status === "error" ? "alert" : "status"} aria-live="polite">{feedback}</p></form></div>;
+  return <div className="contact-card"><h2>Tell us about your project</h2><p>Fields marked with * are required. We&apos;ll deliver your message by email, using W3Forms or your email app as a fallback.</p><form onSubmit={handleSubmit} aria-busy={status === "loading"}><div className="form-grid"><div className="field"><label htmlFor="name">Full name *</label><input id="name" name="name" autoComplete="name" minLength={2} maxLength={100} required /></div><div className="field"><label htmlFor="phone">Phone number *</label><input id="phone" name="phone_number" type="tel" autoComplete="tel" minLength={7} maxLength={20} required /></div></div><div className="field"><label htmlFor="email">Email address *</label><input id="email" name="email" type="email" autoComplete="email" maxLength={254} required /></div><div className="field"><label htmlFor="message">Message / project details *</label><textarea id="message" name="message" rows={6} minLength={10} maxLength={5000} required /></div><div className="honeypot" aria-hidden="true"><label htmlFor="botcheck">Leave empty</label><input id="botcheck" name="botcheck" tabIndex={-1} autoComplete="off" /></div><button className="submit" type="submit" disabled={status === "loading"}>{status === "loading" ? "Sending…" : "Send message"}</button><p className={`form-status ${status === "error" ? "error" : status === "success" ? "success" : ""}`} role={status === "error" ? "alert" : "status"} aria-live="polite">{feedback}</p></form></div>;
 }
 
