@@ -11,6 +11,7 @@ export function Footer() {
             <span>KhushNovaTech</span>
           </Link>
           <p>Ideas, design and technology working together to turn good ideas into useful experiences.</p>
+          <a className="footer-contact-link" href="mailto:khushbu9834@gmail.com">khushbu9834@gmail.com</a>
           <Link className="footer-contact-link" href="/contact">Start a conversation <span aria-hidden="true">↗</span></Link>
         </div>
         <div className="footer-column">
