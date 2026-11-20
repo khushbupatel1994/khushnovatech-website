@@ -14,6 +14,11 @@ export function Footer() {
           <a className="footer-contact-link" href="mailto:khushbu9834@gmail.com">khushbu9834@gmail.com</a>
           <a className="footer-contact-link" href="tel:+917046278573">+91 70462 78573</a>
           <a className="footer-contact-link" href="https://wa.me/917046278573">WhatsApp us</a>
+          <div className="footer-social-links" aria-label="Social profiles">
+            <a href="https://github.com/khushbupatel1994" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="https://www.linkedin.com/feed/" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="https://www.instagram.com/?hl=en" target="_blank" rel="noreferrer">Instagram</a>
+          </div>
           <Link className="footer-contact-link" href="/contact">Start a conversation <span aria-hidden="true">↗</span></Link>
         </div>
         <div className="footer-column">
