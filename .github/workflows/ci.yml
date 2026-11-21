@@ -5,7 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - name: Setup Node.js 22 (Node 24 action runtime)
+        uses: actions/setup-node@v5
         with:
           node-version: '22'
       - run: corepack enable
